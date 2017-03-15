@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta charset="UTF-8">
+    <title>Music Online</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="stylesheets/bootstrap-theme.css">
+
+    <script src="javascripts/jquery-2.1.4.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="javascripts/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="stylesheets/font-awesome.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab&subset=latin,vietnamese' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <!--<script src="json-data/songs.js"></script>-->
+</head>
+<body>
+<div class="container" style="margin-top: 40px">
+    <div id="divSongs"></div>
+</div>
+<script>
+
+    var songs = [];
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/song/getjson",
+            dataType: "json",
+            success: function (data) {
+                songs = data;
+                loadsongs();
+            }
+        });
+    });
+
+    function loadsongs() {
+        var html = "";
+        // vòng lặp: duyệt qua từng phần tử trong mảng songs
+        $.each(songs, function (index, item) {
+            var s = "";
+            s += "<div class='col-md-3' style='margin-bottom: 20px'>";
+            s +=    "<div class=''>";
+            s +=        "<a href='details.html?id=" + item.id + "'><img class='img-responsive' src='" + item.imgSrc + "'></a>";
+            s +=        "<div class='text-center'>";
+            s +=            "<div><a href='details.html?id=" + item.id + "'><strong>" + item.name + "</strong></a></div>";
+            s +=            "<div><small>" + item.artist + "</small></div>";
+            s +=        "</div>";
+            s +=    "</div>";
+            s += "</div>";
+            html += s;
+        });
+
+        // Bỏ chuỗi html vào bên trong thẻ divsongs
+        $("#divSongs").html(html);
+    }
+</script>
+</body>
+</html>
