@@ -1,11 +1,55 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<head>
+    <title>Home</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'/>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+
+    <!--<script src="/javascripts/jquery-2.1.4.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.2.0.js"
+            integrity="sha256-wPFJNIFlVY49B+CuAIrDr932XSb6Jk3J1M22M3E2ylQ=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <% include partials/banner %>
+    <% include partials/nav %>
+    <div class="row">
+        <div class="col-md-3">
+            <% include partials/leftmenu %>
+        </div>
+        <div class="col-md-9">
+            <div id="myApp">
+                <div class="row">
+                    <div class="col-md-4 text-center" style="margin-bottom: 30px" v-for="p in products">
+                        <img v-bind:src="p.imageUrl" style="width: 100%" alt="">
+                        <h4>{{ p.name }}</h4>
+                        <h6>{{ p.price }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6"></div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+<script>
+    // BEGIN: Lấy data từ back-end.
+    var data = <%- JSON.stringify(data) %>;
+    // : Lấy data từ back-end.END
+
+    //console.log(data);
+    var myApp = new Vue({
+        el: '#myApp',
+        data: {
+            products: data
+        }
+    });
+</script>
+</body>
 </html>

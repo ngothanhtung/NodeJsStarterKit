@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var MongoClient = require('mongodb').MongoClient;
+
 /* GET home page. */
 var products = [{
     id: 1,
@@ -35,10 +37,33 @@ var products = [{
 }];
 
 router.get('/', function (req, res, next) {
-    var dataModel = {
-        data: products
-    };
-    res.render('index', dataModel);
+    var mongodb_url = 'mongodb://188.166.218.3:27017/OnlineShop';
+    MongoClient.connect(mongodb_url, function (err, db) {
+        if (err) console.log(err);
+        else {
+
+            findDocuments(db, function (result) {
+                var dataModel = {
+                    data: result
+                };
+                db.close();
+                res.render('index', dataModel);
+            });
+        }
+    });
+
+    // var dataModel = {
+    //     data: products
+    // };
+    // res.render('index', dataModel);
+
 });
+
+var findDocuments = function (db, callback) {
+    var collection = db.collection('products');
+    collection.find().toArray(function (err, items) {
+        return callback(items);
+    });
+};
 
 module.exports = router;
