@@ -7,7 +7,22 @@ router.get('/', function (req, res, next) {
     var model = {
         data: demo.products()
     };
-    var view = 'admin/product';
+    var view = 'admin/product/index';
+    res.render(view, model);
+});
+
+
+router.get('/create', function (req, res, next) {
+    var view = 'admin/product/create';
+    res.render(view, {});
+});
+
+router.post('/create', function (req, res, next) {
+    console.log(req.body);
+    var model = {
+        data: demo.products()
+    };
+    var view = 'admin/product/index';
     res.render(view, model);
 });
 
