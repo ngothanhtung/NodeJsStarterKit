@@ -41,4 +41,11 @@ router.get('/', function (req, res, next) {
     res.render('index', dataModel);
 });
 
+router.get('/site', function (req, res, next) {
+    var dataModel = {
+        data: products
+    };
+    res.render('site', dataModel);
+});
+
 module.exports = router;

@@ -3,17 +3,29 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    var products = [];
+    products.push({
+        id: 1,
+        name: 'iPhone 7',
+        price: 600,
+        discount: 5,
+        description: 'text ...'
+    });
+
+    products.push({
+        id: 2,
+        name: 'iPhone 7 Plus',
+        price: 700,
+        discount: 0,
+        description: 'text ...'
+    });
+
     var model = {
-        name: "Iphone",
-        price: 800,
-        discount: 0
+        data: products
     };
-    var type = req.query.type;
-    var viewname = "product";
-    if (type == 1) {
-        viewname = "promotion";
-    }
-    res.render(viewname, model);
+
+    var view = 'product';
+    res.render(view, model);
 });
 
 
