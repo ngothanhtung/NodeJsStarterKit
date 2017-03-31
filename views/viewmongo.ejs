@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="myApp">
+    <div v-for="p in products">
+        {{ p.name }} : {{ p.price }}
+    </div>
+</div>
+</body>
+
+
+<script src="https://unpkg.com/vue"></script>
+<script>
+    // BEGIN: Lấy data từ back-end.
+    var data = <%- JSON.stringify(data) %>;
+    // : Lấy data từ back-end.END
+
+    //console.log(data);
+    var myApp = new Vue({
+        el: '#myApp',
+        data: {
+            products: data
+        }
+    });
+</script>
+</html>

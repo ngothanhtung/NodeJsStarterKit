@@ -33,11 +33,10 @@ router.get('/getAll', function (req, res, next) {
         findDocuments(db, {}, function (result) {
             console.log(result);
             db.close();
+            res.render('viewmongo', {data: result});
         });
     });
-
-
-    res.send('ok');
+    //res.send('ok');
 });
 
 
