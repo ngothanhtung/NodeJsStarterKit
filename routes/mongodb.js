@@ -1,55 +1,13 @@
 var express = require('express');
 var router = express.Router();
-// Khai bao thu vien MONGODB
+// 1. Khai bao thu vien MONGODB
 var MongoClient = require('mongodb').MongoClient;
 
 
-// Connection URL
+// 2. Connection URL
 var url = 'mongodb://localhost:27017/TestDB';
-/* GET home page. */
 
-router.get('/create', function (req, res, next) {
-    res.render('createmongo');
-});
-
-router.post('/create', function (req, res, next) {
-    // Use connect method to connect to the server
-    MongoClient.connect(url, function (err, db) {
-        console.log("Connected successfully to server");
-        var product = req.body;
-        insertDocument(db, product, function (result) {
-            console.log(result);
-            db.close();
-        });
-    });
-
-    res.render('createmongo');
-});
-
-router.get('/getAll', function (req, res, next) {
-    // Use connect method to connect to the server
-    MongoClient.connect(url, function (err, db) {
-        console.log("Connected successfully to server");
-        findDocuments(db, {}, function (result) {
-            console.log(result);
-            db.close();
-            res.render('viewmongo', {data: result});
-        });
-    });
-    //res.send('ok');
-});
-
-
-router.get('/', function (req, res, next) {
-    // Use connect method to connect to the server
-    MongoClient.connect(url, function (err, db) {
-        console.log("Connected successfully to server");
-        db.close();
-    });
-
-    res.send('ok');
-});
-
+// 3. INSERT
 var insertDocument = function (db, data, callback) {
     // Get the documents collection
     var collection = db.collection('products');
@@ -58,7 +16,7 @@ var insertDocument = function (db, data, callback) {
         callback(result);
     });
 };
-
+// 4. FIND (GET ALL)
 var findDocuments = function (db, condition, callback) {
     // Get the documents collection
     var collection = db.collection('products');
@@ -89,5 +47,55 @@ var removeDocument = function (db, callback) {
         callback(result);
     });
 };
+
+
+/* GET home page. */
+
+router.get('/create', function (req, res, next) {
+    res.render('createmongo');
+});
+
+router.post('/create', function (req, res, next) {
+
+    // 3.1 TEST INSERT
+    // Use connect method to connect to the server
+    MongoClient.connect(url, function (err, db) {
+        console.log("Connected successfully to server");
+        var product = req.body;
+        insertDocument(db, product, function (result) {
+            console.log(result);
+            db.close();
+        });
+    });
+
+    res.render('createmongo');
+});
+
+router.get('/getAll', function (req, res, next) {
+    // 4.1 TEST GET ALL
+    // Use connect method to connect to the server
+    MongoClient.connect(url, function (err, db) {
+        console.log("Connected successfully to server");
+        findDocuments(db, {}, function (result) {
+            console.log(result);
+            db.close();
+            // CHUYEN DATA MODEL SANG CLIENT
+            res.render('viewmongo', {data: result});
+        });
+    });
+    //res.send('ok');
+});
+
+
+router.get('/', function (req, res, next) {
+    // Use connect method to connect to the server
+    MongoClient.connect(url, function (err, db) {
+        console.log("Connected successfully to server");
+        db.close();
+    });
+
+    res.send('ok');
+});
+
 
 module.exports = router;
