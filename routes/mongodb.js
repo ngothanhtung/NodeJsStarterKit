@@ -4,12 +4,13 @@ var db = require('../helpers/MongoDbHelper');
 
 // TEST: INSERT
 router.get('/insert', function (req, res, next) {
-    var product = {
-        name: 'iPhone 7 Plus 128GB',
-        price: 900,
-        discount: 0
-    };
-    db.insertDocument(product, 'products', function (result) {
+    res.render('insert');
+});
+
+router.post('/insert', function (req, res, next) {
+    var data = req.body;
+    var collectionName = 'products';
+    db.insertDocument(data, collectionName, function (result) {
         res.json(result);
     });
 });
@@ -45,7 +46,8 @@ router.get('/getOne', function (req, res, next) {
 
 // TEST: FIND MANY
 router.get('/getMany', function (req, res, next) {
-    db.findDocuments({}, 'products', function (result) {
+    var categoryName = req.query.category;
+    db.findDocuments({category: categoryName}, 'products', function (result) {
         res.json(result);
     });
 });

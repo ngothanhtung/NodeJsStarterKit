@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var admin_product = require('./routes/admin/product');
 var song = require('./routes/song');
 var mongodb = require('./routes/mongodb');
+var upload = require('./routes/upload');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/users', users);
 app.use('/song', song);
 app.use('/admin/product', admin_product);
 app.use('/mongodb', mongodb);
+app.use('/upload', upload);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
