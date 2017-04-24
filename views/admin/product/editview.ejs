@@ -1,0 +1,77 @@
+<div class="content" id="myApp">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card">
+                <form method="post" v-bind:action="getEditFormUrl(product._id)" class="form-horizontal">
+                    <div class="card-header card-header-text" data-background-color="rose">
+                        <h4 class="card-title">Edit product</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <label class="col-sm-2 label-on-left">Name</label>
+                            <div class="col-sm-10">
+                                <div class="form-group label-floating is-empty">
+                                    <label class="control-label"></label>
+                                    <input type="text" class="form-control" name="name" v-model="product.name">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-sm-2 label-on-left">Price</label>
+                            <div class="col-sm-10">
+                                <div class="form-group label-floating is-empty">
+                                    <label class="control-label"></label>
+                                    <input type="number" class="form-control" name="price" v-model="product.price">
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-sm-2 label-on-left">Discount</label>
+                            <div class="col-sm-10">
+                                <div class="form-group label-floating is-empty">
+                                    <label class="control-label"></label>
+                                    <input type="number" class="form-control" name="discount" v-model="product.discount">
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-md-2"></label>
+                            <div class="col-md-10">
+                                <div class="form-group form-button">
+                                    <button type="submit" class="btn btn-fill btn-rose">Save changes
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://unpkg.com/vue"></script>
+<script>
+    // BEGIN: Lấy data từ back-end.
+    var model = <%- JSON.stringify(model) %>;
+    // : Lấy data từ back-end.END
+
+    var myApp = new Vue({
+        el: '#myApp',
+        data: {
+            product: model
+        },
+        methods: {
+            getEditFormUrl: function(id) {
+                return '/admin/product/edit/' + id;
+            }
+        }
+    });
+</script>
